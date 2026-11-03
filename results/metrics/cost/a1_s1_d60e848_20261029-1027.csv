@@ -1,0 +1,4 @@
+run_id,config,seed,phase,gpu_name,gpu_count,amp,batch_size,n_images,wall_seconds,gpu_hours,sec_per_image_mean,sec_per_image_median,peak_gpu_mem_mb,commit
+a1_s1_d60e848_20261029-1027,a1,1,embed_cache,Tesla T4,2,fp16,1,1305,596.21,0.1656,,,2768.7,d60e8484824177951558edd4712684fcfe53188b
+a1_s1_d60e848_20261029-1027,a1,1,train,Tesla T4,2,fp16,1,1450,1275.89,0.3544,,,2815.5,d60e8484824177951558edd4712684fcfe53188b
+a1_s1_d60e848_20261029-1027,a1,1,infer,Tesla T4,2,fp16,1,798,450.44,0.1251,0.4515,0.451,2779.7,d60e8484824177951558edd4712684fcfe53188b

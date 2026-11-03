@@ -1,0 +1,15 @@
+{
+  "checkpoint": "sam_vit_b_01ec64.pth",
+  "checkpoint_bytes": 375042383,
+  "checkpoint_sha256": "ec2df62732614e57411cdcf32a23ffdf28910380d03139ee0f4fcbe91eb8c912",
+  "counts": {
+    "clinicdb": 62,
+    "clinicdb_train": 550,
+    "colondb": 380,
+    "cvc300": 60,
+    "etis": 196,
+    "kvasir": 100,
+    "kvasir_train": 900
+  },
+  "counts_ok": true
+}

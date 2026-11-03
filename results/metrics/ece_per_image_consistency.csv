@@ -1,0 +1,17 @@
+family,dataset,region,per_image_class,n_excluding_zero,pooled_class,same_reading
+a1_vs_a0,colondb,roi,consistent_-,3,consistent_-,True
+a1_vs_a0,colondb,bnd,consistent_-,3,consistent_-,True
+a1_vs_a0,etis,roi,consistent_-,3,consistent_-,True
+a1_vs_a0,etis,bnd,consistent_-,3,consistent_-,True
+a2_vs_a0,colondb,roi,consistent_-,3,consistent_-,True
+a2_vs_a0,colondb,bnd,consistent_-,3,consistent_-,True
+a2_vs_a0,etis,roi,consistent_-,3,not_consistent,False
+a2_vs_a0,etis,bnd,consistent_-,3,consistent_-,True
+a2_vs_a1,colondb,roi,consistent_-,3,not_consistent,False
+a2_vs_a1,colondb,bnd,consistent_-,3,consistent_-,True
+a2_vs_a1,etis,roi,not_consistent,1,not_consistent,True
+a2_vs_a1,etis,bnd,not_consistent,1,not_consistent,True
+a3_vs_a2,colondb,roi,not_consistent,2,not_consistent,True
+a3_vs_a2,colondb,bnd,consistent_-,3,consistent_-,True
+a3_vs_a2,etis,roi,consistent_-,3,not_consistent,False
+a3_vs_a2,etis,bnd,consistent_-,3,not_consistent,False

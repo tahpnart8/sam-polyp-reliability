@@ -1,0 +1,4 @@
+config,n_total,n_trainable,n_trainable_lora,n_trainable_decoder,n_trainable_other,lora_targets,lora_rank,commit
+a0,93735472,0,0,0,0,,0,0bbfa8d2f5866f92a9473a2aa9dcff61d07244d5
+a1,93735472,4058340,0,4058340,0,,0,0bbfa8d2f5866f92a9473a2aa9dcff61d07244d5
+a2,93882928,4205796,147456,4058340,0,q+v,4,0bbfa8d2f5866f92a9473a2aa9dcff61d07244d5

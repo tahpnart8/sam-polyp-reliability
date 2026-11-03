@@ -1,0 +1,18 @@
+# Local machine: analysis + tests (PROTOCOL §9.4). Exact pins; versions are part of the result.
+# torch/torchvision CPU wheels: --index-url https://download.pytorch.org/whl/cpu
+numpy==2.4.4
+scipy==1.17.1
+pandas==2.2.3
+scikit-learn==1.8.0
+pillow==12.2.0
+opencv-python-headless==5.0.0.93
+PyYAML==6.0.3
+ImageHash==4.3.2
+PyWavelets==1.9.0
+torch==2.13.0
+torchvision==0.28.0
+segment-anything==1.0
+pytest==9.1.1
+
+# optional: figures
+# matplotlib==3.10.9

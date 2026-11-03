@@ -1,0 +1,200 @@
+# Integrity report
+
+Runs: a0_s0_d60e848_20261029-1028, a1_s0_d60e848_20261029-1027, a1_s1_d60e848_20261029-1027, a1_s2_d60e848_20261029-1028, a2_s0_d60e848_20261029-1027, a2_s1_d60e848_20261029-1028, a2_s2_d60e848_20261029-1028, a3_s012_2f6ac15_20261029-1722
+
+## 1. Data leakage
+- PASS: train and val are disjoint (1305 + 145)
+- PASS: train/val contain only images of the two training sets
+- PASS: train + val = the 1,450 PraNet training images
+- NOTE: excluded_images.json lists 0 images
+
+## 2. Same conditions
+- PASS: a0_s0_d60e848_20261029-1028: manifest status ok (ok)
+- PASS: a0_s0_d60e848_20261029-1028: prompts.json sha256 matches the repository file
+- PASS: a0_s0_d60e848_20261029-1028: val_split.json sha256 matches
+- PASS: a0_s0_d60e848_20261029-1028: SAM checkpoint sha256 matches
+- PASS: a0_s0_d60e848_20261029-1028: environment matches the env lock
+- PASS: a1_s0_d60e848_20261029-1027: manifest status ok (ok)
+- PASS: a1_s0_d60e848_20261029-1027: prompts.json sha256 matches the repository file
+- PASS: a1_s0_d60e848_20261029-1027: val_split.json sha256 matches
+- PASS: a1_s0_d60e848_20261029-1027: SAM checkpoint sha256 matches
+- PASS: a1_s0_d60e848_20261029-1027: environment matches the env lock
+- PASS: a1_s1_d60e848_20261029-1027: manifest status ok (ok)
+- PASS: a1_s1_d60e848_20261029-1027: prompts.json sha256 matches the repository file
+- PASS: a1_s1_d60e848_20261029-1027: val_split.json sha256 matches
+- PASS: a1_s1_d60e848_20261029-1027: SAM checkpoint sha256 matches
+- PASS: a1_s1_d60e848_20261029-1027: environment matches the env lock
+- PASS: a1_s2_d60e848_20261029-1028: manifest status ok (ok)
+- PASS: a1_s2_d60e848_20261029-1028: prompts.json sha256 matches the repository file
+- PASS: a1_s2_d60e848_20261029-1028: val_split.json sha256 matches
+- PASS: a1_s2_d60e848_20261029-1028: SAM checkpoint sha256 matches
+- PASS: a1_s2_d60e848_20261029-1028: environment matches the env lock
+- PASS: a2_s0_d60e848_20261029-1027: manifest status ok (ok)
+- PASS: a2_s0_d60e848_20261029-1027: prompts.json sha256 matches the repository file
+- PASS: a2_s0_d60e848_20261029-1027: val_split.json sha256 matches
+- PASS: a2_s0_d60e848_20261029-1027: SAM checkpoint sha256 matches
+- PASS: a2_s0_d60e848_20261029-1027: environment matches the env lock
+- PASS: a2_s1_d60e848_20261029-1028: manifest status ok (ok)
+- PASS: a2_s1_d60e848_20261029-1028: prompts.json sha256 matches the repository file
+- PASS: a2_s1_d60e848_20261029-1028: val_split.json sha256 matches
+- PASS: a2_s1_d60e848_20261029-1028: SAM checkpoint sha256 matches
+- PASS: a2_s1_d60e848_20261029-1028: environment matches the env lock
+- PASS: a2_s2_d60e848_20261029-1028: manifest status ok (ok)
+- PASS: a2_s2_d60e848_20261029-1028: prompts.json sha256 matches the repository file
+- PASS: a2_s2_d60e848_20261029-1028: val_split.json sha256 matches
+- PASS: a2_s2_d60e848_20261029-1028: SAM checkpoint sha256 matches
+- PASS: a2_s2_d60e848_20261029-1028: environment matches the env lock
+- PASS: a3_s012_2f6ac15_20261029-1722: manifest status ok (ok)
+- PASS: a3_s012_2f6ac15_20261029-1722: prompts.json sha256 matches the repository file
+- PASS: a3_s012_2f6ac15_20261029-1722: val_split.json sha256 matches
+- PASS: a3_s012_2f6ac15_20261029-1722: SAM checkpoint sha256 matches
+- PASS: a3_s012_2f6ac15_20261029-1722: environment matches the env lock
+- NOTE: commit per run: a0_s0_d60e848_20261029-1028=d60e848, a1_s0_d60e848_20261029-1027=d60e848, a1_s1_d60e848_20261029-1027=d60e848, a1_s2_d60e848_20261029-1028=d60e848, a2_s0_d60e848_20261029-1027=d60e848, a2_s1_d60e848_20261029-1028=d60e848, a2_s2_d60e848_20261029-1028=d60e848, a3_s012_2f6ac15_20261029-1722=2f6ac15
+
+## 3. Training of A1, A2
+- PASS: a1_s0_d60e848_20261029-1027: all 12 epochs
+- PASS: a1_s0_d60e848_20261029-1027: selected epoch = highest validation Dice (earliest on ties) (epoch 9, val 0.9487)
+- PASS: a1_s0_d60e848_20261029-1027: training loss decreases (0.458 → 0.157)
+- PASS: a1_s0_d60e848_20261029-1027: checkpoint holds only LoRA and mask decoder
+- PASS: a1_s0_d60e848_20261029-1027: decoder parameter count = trainable_params.csv (4058340)
+- PASS: a1_s0_d60e848_20261029-1027: LoRA parameter count = trainable_params.csv (0)
+- PASS: a1_s1_d60e848_20261029-1027: all 12 epochs
+- PASS: a1_s1_d60e848_20261029-1027: selected epoch = highest validation Dice (earliest on ties) (epoch 8, val 0.9470)
+- PASS: a1_s1_d60e848_20261029-1027: training loss decreases (0.454 → 0.150)
+- PASS: a1_s1_d60e848_20261029-1027: checkpoint holds only LoRA and mask decoder
+- PASS: a1_s1_d60e848_20261029-1027: decoder parameter count = trainable_params.csv (4058340)
+- PASS: a1_s1_d60e848_20261029-1027: LoRA parameter count = trainable_params.csv (0)
+- PASS: a1_s2_d60e848_20261029-1028: all 12 epochs
+- PASS: a1_s2_d60e848_20261029-1028: selected epoch = highest validation Dice (earliest on ties) (epoch 8, val 0.9486)
+- PASS: a1_s2_d60e848_20261029-1028: training loss decreases (0.459 → 0.154)
+- PASS: a1_s2_d60e848_20261029-1028: checkpoint holds only LoRA and mask decoder
+- PASS: a1_s2_d60e848_20261029-1028: decoder parameter count = trainable_params.csv (4058340)
+- PASS: a1_s2_d60e848_20261029-1028: LoRA parameter count = trainable_params.csv (0)
+- PASS: a2_s0_d60e848_20261029-1027: all 12 epochs
+- PASS: a2_s0_d60e848_20261029-1027: selected epoch = highest validation Dice (earliest on ties) (epoch 8, val 0.9537)
+- PASS: a2_s0_d60e848_20261029-1027: training loss decreases (0.409 → 0.135)
+- PASS: a2_s0_d60e848_20261029-1027: checkpoint holds only LoRA and mask decoder
+- PASS: a2_s0_d60e848_20261029-1027: decoder parameter count = trainable_params.csv (4058340)
+- PASS: a2_s0_d60e848_20261029-1027: LoRA parameter count = trainable_params.csv (147456)
+- PASS: a2_s0_d60e848_20261029-1027: LoRA B is non-zero after training (LoRA was learned) (max |B| 6.93e-02)
+- PASS: a2_s1_d60e848_20261029-1028: all 12 epochs
+- PASS: a2_s1_d60e848_20261029-1028: selected epoch = highest validation Dice (earliest on ties) (epoch 9, val 0.9547)
+- PASS: a2_s1_d60e848_20261029-1028: training loss decreases (0.406 → 0.131)
+- PASS: a2_s1_d60e848_20261029-1028: checkpoint holds only LoRA and mask decoder
+- PASS: a2_s1_d60e848_20261029-1028: decoder parameter count = trainable_params.csv (4058340)
+- PASS: a2_s1_d60e848_20261029-1028: LoRA parameter count = trainable_params.csv (147456)
+- PASS: a2_s1_d60e848_20261029-1028: LoRA B is non-zero after training (LoRA was learned) (max |B| 5.11e-02)
+- PASS: a2_s2_d60e848_20261029-1028: all 12 epochs
+- PASS: a2_s2_d60e848_20261029-1028: selected epoch = highest validation Dice (earliest on ties) (epoch 9, val 0.9555)
+- PASS: a2_s2_d60e848_20261029-1028: training loss decreases (0.441 → 0.128)
+- PASS: a2_s2_d60e848_20261029-1028: checkpoint holds only LoRA and mask decoder
+- PASS: a2_s2_d60e848_20261029-1028: decoder parameter count = trainable_params.csv (4058340)
+- PASS: a2_s2_d60e848_20261029-1028: LoRA parameter count = trainable_params.csv (147456)
+- PASS: a2_s2_d60e848_20261029-1028: LoRA B is non-zero after training (LoRA was learned) (max |B| 4.94e-02)
+
+## 4-6. Per-run data, metrics checked independently
+- PASS: a0_s0_d60e848_20261029-1028: 798 images, correct count per source
+- PASS: a0_s0_d60e848_20261029-1028: image_id unique
+- PASS: a0_s0_d60e848_20261029-1028: same image_id set as the first run
+- PASS: a0_s0_d60e848_20261029-1028: no NaN outside the allowed column
+- PASS: a0_s0_d60e848_20261029-1028: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a0_s0_d60e848_20261029-1028: column failed = (Dice < 0.5)
+- PASS: a0_s0_d60e848_20261029-1028/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a0_s0_d60e848_20261029-1028/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a0_s0_d60e848_20261029-1028/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a0_s0_d60e848_20261029-1028/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a0_s0_d60e848_20261029-1028/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a0_s0_d60e848_20261029-1028: AURC, Spearman, AUROC match an independent implementation (max deviation 0.0e+00)
+- PASS: a1_s0_d60e848_20261029-1027: 798 images, correct count per source
+- PASS: a1_s0_d60e848_20261029-1027: image_id unique
+- PASS: a1_s0_d60e848_20261029-1027: same image_id set as the first run
+- PASS: a1_s0_d60e848_20261029-1027: no NaN outside the allowed column
+- PASS: a1_s0_d60e848_20261029-1027: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a1_s0_d60e848_20261029-1027: column failed = (Dice < 0.5)
+- PASS: a1_s0_d60e848_20261029-1027/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s0_d60e848_20261029-1027/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s0_d60e848_20261029-1027/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s0_d60e848_20261029-1027/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s0_d60e848_20261029-1027/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s0_d60e848_20261029-1027: AURC, Spearman, AUROC match an independent implementation (max deviation 1.1e-16)
+- PASS: a1_s1_d60e848_20261029-1027: 798 images, correct count per source
+- PASS: a1_s1_d60e848_20261029-1027: image_id unique
+- PASS: a1_s1_d60e848_20261029-1027: same image_id set as the first run
+- PASS: a1_s1_d60e848_20261029-1027: no NaN outside the allowed column
+- PASS: a1_s1_d60e848_20261029-1027: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a1_s1_d60e848_20261029-1027: column failed = (Dice < 0.5)
+- PASS: a1_s1_d60e848_20261029-1027/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s1_d60e848_20261029-1027/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s1_d60e848_20261029-1027/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s1_d60e848_20261029-1027/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s1_d60e848_20261029-1027/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s1_d60e848_20261029-1027: AURC, Spearman, AUROC match an independent implementation (max deviation 2.8e-17)
+- PASS: a1_s2_d60e848_20261029-1028: 798 images, correct count per source
+- PASS: a1_s2_d60e848_20261029-1028: image_id unique
+- PASS: a1_s2_d60e848_20261029-1028: same image_id set as the first run
+- PASS: a1_s2_d60e848_20261029-1028: no NaN outside the allowed column
+- PASS: a1_s2_d60e848_20261029-1028: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a1_s2_d60e848_20261029-1028: column failed = (Dice < 0.5)
+- PASS: a1_s2_d60e848_20261029-1028/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s2_d60e848_20261029-1028/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s2_d60e848_20261029-1028/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s2_d60e848_20261029-1028/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s2_d60e848_20261029-1028/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a1_s2_d60e848_20261029-1028: AURC, Spearman, AUROC match an independent implementation (max deviation 2.8e-17)
+- PASS: a2_s0_d60e848_20261029-1027: 798 images, correct count per source
+- PASS: a2_s0_d60e848_20261029-1027: image_id unique
+- PASS: a2_s0_d60e848_20261029-1027: same image_id set as the first run
+- PASS: a2_s0_d60e848_20261029-1027: no NaN outside the allowed column
+- PASS: a2_s0_d60e848_20261029-1027: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a2_s0_d60e848_20261029-1027: column failed = (Dice < 0.5)
+- PASS: a2_s0_d60e848_20261029-1027/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s0_d60e848_20261029-1027/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s0_d60e848_20261029-1027/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s0_d60e848_20261029-1027/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s0_d60e848_20261029-1027/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s0_d60e848_20261029-1027: AURC, Spearman, AUROC match an independent implementation (max deviation 0.0e+00)
+- PASS: a2_s1_d60e848_20261029-1028: 798 images, correct count per source
+- PASS: a2_s1_d60e848_20261029-1028: image_id unique
+- PASS: a2_s1_d60e848_20261029-1028: same image_id set as the first run
+- PASS: a2_s1_d60e848_20261029-1028: no NaN outside the allowed column
+- PASS: a2_s1_d60e848_20261029-1028: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a2_s1_d60e848_20261029-1028: column failed = (Dice < 0.5)
+- PASS: a2_s1_d60e848_20261029-1028/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s1_d60e848_20261029-1028/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s1_d60e848_20261029-1028/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s1_d60e848_20261029-1028/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s1_d60e848_20261029-1028/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s1_d60e848_20261029-1028: AURC, Spearman, AUROC match an independent implementation (max deviation 0.0e+00)
+- PASS: a2_s2_d60e848_20261029-1028: 798 images, correct count per source
+- PASS: a2_s2_d60e848_20261029-1028: image_id unique
+- PASS: a2_s2_d60e848_20261029-1028: same image_id set as the first run
+- PASS: a2_s2_d60e848_20261029-1028: no NaN outside the allowed column
+- PASS: a2_s2_d60e848_20261029-1028: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a2_s2_d60e848_20261029-1028: column failed = (Dice < 0.5)
+- PASS: a2_s2_d60e848_20261029-1028/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s2_d60e848_20261029-1028/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s2_d60e848_20261029-1028/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s2_d60e848_20261029-1028/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s2_d60e848_20261029-1028/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a2_s2_d60e848_20261029-1028: AURC, Spearman, AUROC match an independent implementation (max deviation 0.0e+00)
+- PASS: a3_s012_2f6ac15_20261029-1722: 798 images, correct count per source
+- PASS: a3_s012_2f6ac15_20261029-1722: image_id unique
+- PASS: a3_s012_2f6ac15_20261029-1722: same image_id set as the first run
+- PASS: a3_s012_2f6ac15_20261029-1722: no NaN outside the allowed column
+- PASS: a3_s012_2f6ac15_20261029-1722: A3 has pairwise Dice for every image
+- PASS: a3_s012_2f6ac15_20261029-1722: empty mask -> Dice 0 and conf_mean_inside 0 (0 empty)
+- PASS: a3_s012_2f6ac15_20261029-1722: column failed = (Dice < 0.5)
+- PASS: a3_s012_2f6ac15_20261029-1722/kvasir: whole-image ECE bin pixel count = H x W of each image
+- PASS: a3_s012_2f6ac15_20261029-1722/clinicdb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a3_s012_2f6ac15_20261029-1722/colondb: whole-image ECE bin pixel count = H x W of each image
+- PASS: a3_s012_2f6ac15_20261029-1722/etis: whole-image ECE bin pixel count = H x W of each image
+- PASS: a3_s012_2f6ac15_20261029-1722/cvc300: whole-image ECE bin pixel count = H x W of each image
+- PASS: a3_s012_2f6ac15_20261029-1722: AURC, Spearman, AUROC match an independent implementation (max deviation 0.0e+00)
+
+## A3
+- PASS: a3_s012_2f6ac15_20261029-1722: 3 members are A2 seeds 0/1/2
+- PASS: a3_s012_2f6ac15_20261029-1722: 3 members at one commit ({'d60e8484824177951558edd4712684fcfe53188b'})
+
+**Result: 0 FAIL.**
+
+(Generated by `scripts/checks/integrity.py` in the development repository on 2026-10-30; report text translated for this repository. The training-checkpoint checks need the fine-tuned weights, which are not included here.)

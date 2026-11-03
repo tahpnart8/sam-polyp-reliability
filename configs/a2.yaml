@@ -1,0 +1,10 @@
+# A2 LoRA (q, v of all 12 encoder blocks, rank 4) + mask decoder (PROTOCOL §5.2-5.3).
+inherit: base.yaml
+name: a2
+model:
+  train_decoder: true
+  lora:
+    enabled: true
+train:
+  enabled: true
+  cache_embeddings: false

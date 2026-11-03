@@ -1,0 +1,39 @@
+# Datasets are never part of this repository (see README, "Data")
+data/raw/
+TrainDataset/
+TestDataset/
+*.zip
+
+# Model weights and large predictions
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+results/predictions/
+results/checkpoints/
+*.npz
+# per-image ECE bin statistics are small and needed to rebuild the ECE tables
+!results/metrics/ece_bins/*.npz
+!results/metrics/perturb/ece_bins/*.npz
+
+# Kaggle jobs and credentials
+kaggle.json
+*.env
+kaggle/jobs/
+kaggle/_code_bundle/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

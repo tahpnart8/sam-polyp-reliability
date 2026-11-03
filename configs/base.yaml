@@ -1,0 +1,98 @@
+# Shared by every configuration (PROTOCOL §1-§10). Only a0/a1/a2.yaml may override the `model`
+# and `train` blocks; nothing else differs between configurations (fairness rule, PROTOCOL §5.1).
+root_seed: 20261029            # PROTOCOL §2, used only for prompts / val split / bootstrap
+
+data:
+  train_dir: TrainDataset
+  train_image_subdir: image
+  train_mask_subdir: masks
+  test_dir: TestDataset
+  test_image_subdir: images
+  test_mask_subdir: masks
+  test_folders:                 # dataset key -> PraNet folder name (PROTOCOL §1.1)
+    kvasir: Kvasir
+    clinicdb: CVC-ClinicDB
+    colondb: CVC-ColonDB
+    etis: ETIS-LaribPolypDB
+    cvc300: CVC-300
+  mask_threshold: 127           # Q-B1, PROTOCOL §12
+  connectivity: 8               # Q-B2, PROTOCOL §12
+  prompts_file: data/prompts/prompts.json
+  val_split_file: data/splits/val_split.json
+  zip_sha256:                   # original PraNet zips, downloaded 2026-10-29
+    TrainDataset.zip: 30c99744df6770a4f514f8ccfa7404291ba968079ea3b6e3231ae74ad2b247cc
+    TestDataset.zip: b3be6da5b25679bed228dca52ae3d668dd89f329b2505c7b8961aa20dca4a90a
+  excluded_file: data/splits/excluded_images.json
+
+prompt:
+  jitter_max: 0.10
+  min_box_component_px: 50     # Q-B2 (PROTOCOL §12): boxes only for components >= 50 px; GT masks unchanged
+
+split:
+  val_fraction: 0.10
+
+audit:
+  phash_exclude_max: 6          # PROTOCOL §1.5
+  phash_report_max: 10
+  phash_center_frac: 0.6        # Q-B10 (PROTOCOL §12): exclusion needs full AND centre-crop pHash <= 6
+
+model:
+  type: vit_b
+  checkpoint: sam_vit_b_01ec64.pth
+  checkpoint_url: https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
+  checkpoint_sha256: ec2df62732614e57411cdcf32a23ffdf28910380d03139ee0f4fcbe91eb8c912  # env_s0_5a44eeb_20261029-0955, also checked locally
+  image_size: 1024
+  multimask_output: false
+  threshold: 0.5
+  multi_box_merge: max
+  iou_pred_merge: mean
+  train_decoder: false
+  lora:
+    enabled: false
+    rank: 4
+    targets: [q, v]
+
+train:
+  enabled: false
+  epochs: 12
+  batch_size: 1                 # 2 ran out of memory on a T4 for A2 (2026-10-29); same for A1 to keep configs identical
+  grad_accum: 4                 # effective batch 4 (PROTOCOL §6)
+  optimizer: adamw
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  scheduler: cosine_per_step    # Q-B4, PROTOCOL §12
+  warmup_steps: 0
+  amp: fp16
+  loss:
+    focal_weight: 20.0
+    dice_weight: 1.0
+    iou_mse_weight: 1.0         # Q-B3, PROTOCOL §12
+    focal_gamma: 2.0
+    focal_alpha: null
+    resolution: low_res_256
+  multi_polyp_sample: per_box   # Q-B5, PROTOCOL §12
+  select_by: val_dice
+  seeds: [0, 1, 2]
+
+metrics:
+  failure_dice: 0.5
+  secondary_failure_dice: 0.7  # sensitivity analysis only (PROTOCOL §7.6)
+  ece_bins: 15
+  ece_range: [0.5, 1.0]         # Q-B7, PROTOCOL §12: confidence max(p,1-p) lies in [0.5, 1]
+  roi_expand_per_side: 0.10     # Q-B8, PROTOCOL §12
+  boundary_frac_diag: 0.01
+  empty_mask_conf: 0.0          # Q-B6, PROTOCOL §12
+  empty_pair_dice: 1.0          # Q-B6, PROTOCOL §12
+  primary_datasets: [colondb, etis]
+  source_datasets: [kvasir, clinicdb]
+  reference_datasets: [cvc300]
+
+bootstrap:
+  n_resamples: 1000
+  ci_level: 0.95
+  method: percentile            # Q-B9, PROTOCOL §12
+
+cost:
+  benchmark_dataset: etis
+  benchmark_n_images: 50
+  benchmark_warmup: 5

@@ -1,0 +1,6 @@
+{
+  "data_hash": "8b6fb41dc9aa4850cb3b5be58f347e1f17203bf081525002821c0dcdf297b332",
+  "excluded": [],
+  "rule": "CONTRACT \u00a71.5: colondb/etis image with pHash Hamming <= 6 to any train image",
+  "version": 1
+}

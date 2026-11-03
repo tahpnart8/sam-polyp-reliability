@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "samrel"
+version = "0.1.0"
+description = "Calibration and failure detection across SAM fine-tuning strategies (ICICC-2027)"
+requires-python = "==3.11.*"
+# Exact pins live in requirements-local.txt / requirements-kaggle.txt (PROTOCOL §9.4).
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-q"
+markers = [
+    "slow: builds the real SAM ViT-B architecture on CPU (no checkpoint)",
+    "realdata: needs SAMREL_DATA_ROOT pointing at the PraNet data",
+]

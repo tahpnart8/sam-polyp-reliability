@@ -1,0 +1,9 @@
+dataset,rule,image_id
+colondb,typical,colondb/235
+colondb,overconfident,colondb/204
+colondb,a0_worst,colondb/337
+colondb,a2_worst,colondb/270
+etis,typical,etis/100
+etis,overconfident,etis/192
+etis,a0_worst,etis/187
+etis,a2_worst,etis/72

@@ -1,0 +1,3 @@
+# Keep data and result files byte-identical on every platform (their sha256 is recorded in the run manifests)
+data/** -text
+results/** -text

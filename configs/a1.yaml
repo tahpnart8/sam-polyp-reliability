@@ -1,0 +1,8 @@
+# A1 decoder-only (PROTOCOL §5.2). Encoder embeddings are cached once.
+inherit: base.yaml
+name: a1
+model:
+  train_decoder: true
+train:
+  enabled: true
+  cache_embeddings: true

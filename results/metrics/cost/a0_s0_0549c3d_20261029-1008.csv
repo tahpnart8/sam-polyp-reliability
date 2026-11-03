@@ -1,0 +1,2 @@
+run_id,config,seed,phase,gpu_name,gpu_count,amp,batch_size,n_images,wall_seconds,gpu_hours,sec_per_image_mean,sec_per_image_median,peak_gpu_mem_mb,commit
+a0_s0_0549c3d_20261029-1008,a0,0,infer,Tesla T4,2,fp16,2,798,584.25,0.1623,0.4972,0.511,2771.6,0549c3d09d3b78950991a37773392b612471268f

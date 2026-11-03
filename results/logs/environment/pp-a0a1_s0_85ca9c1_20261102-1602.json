@@ -1,0 +1,20 @@
+{
+  "cudnn": 91900,
+  "driver": "580.178.04\n580.178.04",
+  "gpu_count": 2,
+  "gpu_mem_total_mb": 14911,
+  "gpu_name": "Tesla T4",
+  "hostname_hash": "5700b9f94c4c",
+  "imagehash": "4.3.2",
+  "numpy": "2.1.3",
+  "opencv": "4.14.0.94",
+  "pandas": "2.3.3",
+  "pillow": "13.0.0",
+  "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+  "python": "3.13.15",
+  "scikit_learn": "1.6.1",
+  "scipy": "1.16.3",
+  "segment_anything": "1.0",
+  "torch": "2.11.0+cu128",
+  "torch_cuda": "12.8"
+}

@@ -1,0 +1,17 @@
+{
+  "source_run": "env_s0_5a44eeb_20261029-0955",
+  "locked_utc": "2026-10-29",
+  "versions": {
+    "python": "3.13.15",
+    "torch": "2.11.0+cu128",
+    "torch_cuda": "12.8",
+    "numpy": "2.1.3",
+    "scipy": "1.16.3",
+    "scikit_learn": "1.6.1",
+    "pillow": "13.0.0",
+    "opencv": "4.14.0.94",
+    "pandas": "2.3.3",
+    "segment_anything": "1.0",
+    "imagehash": "4.3.2"
+  }
+}

@@ -1,0 +1,5 @@
+# Installed on top of the Kaggle GPU image (PROTOCOL §9.4). Torch, numpy etc. come from the image;
+# their real versions are recorded in environment.json and locked in configs/env_kaggle.lock.json
+# after the first smoke job.
+segment-anything==1.0
+ImageHash==4.3.2

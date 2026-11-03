@@ -1,0 +1,7 @@
+dataset,region,n_images,top10pct_share,effective_n_images,max_share,max_over_min
+colondb,img,380,0.1,380.0,0.0026,1.0
+colondb,roi,380,0.4037,153.6,0.0171,176.3
+colondb,bnd,380,0.2421,274.2,0.0085,13.9
+etis,img,196,0.102,196.0,0.0051,1.0
+etis,roi,196,0.4141,77.4,0.0318,270.5
+etis,bnd,196,0.2386,139.7,0.0145,16.7

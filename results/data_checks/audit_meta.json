@@ -1,0 +1,28 @@
+{
+  "commit": "4edea652674cbed20f81ae0e9ccbcd6a86cac5bb",
+  "commit_dirty": true,
+  "config_sha256": "07718d052c2538c1edf34476a7427c1f4aad2c65184b275243cb3537a8fc76b2",
+  "created_utc": "2026-10-29T09:13:25.699903+00:00",
+  "data_hash": "8b6fb41dc9aa4850cb3b5be58f347e1f17203bf081525002821c0dcdf297b332",
+  "environment": {
+    "cudnn": null,
+    "driver": null,
+    "gpu_count": 0,
+    "gpu_mem_total_mb": null,
+    "gpu_name": null,
+    "hostname_hash": "5264be0f1a07",
+    "imagehash": "4.3.2",
+    "numpy": "2.4.4",
+    "opencv": "5.0.0.93",
+    "pandas": "2.2.3",
+    "pillow": "12.2.0",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9",
+    "scikit_learn": "1.8.0",
+    "scipy": "1.17.1",
+    "segment_anything": "1.0",
+    "torch": "2.13.0+cpu",
+    "torch_cuda": null
+  },
+  "phash_exclude_max": 6
+}

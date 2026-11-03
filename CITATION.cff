@@ -1,0 +1,59 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite the manuscript below."
+title: "Accuracy versus Reliability: Evaluating Calibration and Failure Detection Across SAM Fine-Tuning Strategies for Cross-Center Polyp Segmentation"
+type: software
+license: MIT
+repository-code: "https://github.com/tahpnart8/sam-polyp-reliability"
+url: "https://github.com/tahpnart8/sam-polyp-reliability"
+date-released: "2026-11-03"
+authors:
+  - family-names: Nguyen
+    given-names: Quoc Hung
+    orcid: "https://orcid.org/0000-0002-6363-0160"
+    email: hungngq@ueh.edu.vn
+    affiliation: "University of Economics Ho Chi Minh City (UEH)"
+  - family-names: Tran
+    given-names: Duc Phat
+    orcid: "https://orcid.org/0009-0001-8050-3630"
+    affiliation: "University of Economics Ho Chi Minh City (UEH)"
+  - family-names: Nguyen
+    given-names: Le Hai Long
+    orcid: "https://orcid.org/0009-0006-5374-5251"
+    affiliation: "University of Economics Ho Chi Minh City (UEH)"
+  - family-names: Nguyen
+    given-names: Thuy Ngan
+    orcid: "https://orcid.org/0009-0008-5955-387X"
+    affiliation: "University of Economics Ho Chi Minh City (UEH)"
+  - family-names: Tran
+    given-names: Anh Tu
+    orcid: "https://orcid.org/0009-0009-5494-7877"
+    affiliation: "University of Economics Ho Chi Minh City (UEH)"
+  - family-names: Nguyen
+    given-names: Hoang Phuc
+    orcid: "https://orcid.org/0009-0002-2607-5775"
+    affiliation: "University of Economics Ho Chi Minh City (UEH)"
+keywords:
+  - Segment Anything Model
+  - polyp segmentation
+  - model calibration
+  - failure detection
+  - LoRA fine-tuning
+  - domain shift
+preferred-citation:
+  type: unpublished
+  title: "Accuracy versus Reliability: Evaluating Calibration and Failure Detection Across SAM Fine-Tuning Strategies for Cross-Center Polyp Segmentation"
+  year: 2026
+  notes: "Manuscript prepared for submission to ICICC-2027 (Springer LNNS); not yet accepted."
+  authors:
+    - family-names: Nguyen
+      given-names: Quoc Hung
+    - family-names: Tran
+      given-names: Duc Phat
+    - family-names: Nguyen
+      given-names: Le Hai Long
+    - family-names: Nguyen
+      given-names: Thuy Ngan
+    - family-names: Tran
+      given-names: Anh Tu
+    - family-names: Nguyen
+      given-names: Hoang Phuc

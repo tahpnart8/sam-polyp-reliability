@@ -1,0 +1,8 @@
+dataset,role,n_expected,n_images,n_masks,n_images_without_mask,n_masks_without_image,count_ok,size_min_hw,size_max_hw,size_mode_hw,n_distinct_sizes,n_mask_nonbinary,n_mask_empty,n_size_mismatch,n_multi_polyp,max_components,n_small_components,fg_fraction_median,n_near_dup_within,n_near_dup_in_train,n_near_dup_in_train_center,n_excluded
+kvasir_train,train,900,900,900,0,0,True,487x332,1072x1920,530x622,309,0,0,0,36,4,131,0.11363398379119986,47,1,0,0
+clinicdb_train,train,550,550,550,0,0,True,288x384,288x384,288x384,1,0,0,0,25,339,2605,0.0705837673611111,257,1,0,0
+kvasir,source_test,100,100,100,0,0,True,352x568,1070x1348,530x622,57,0,0,0,12,10,12,0.12172842255798808,0,2,1,0
+clinicdb,source_test,62,62,62,0,0,True,288x384,288x384,288x384,1,0,0,0,5,27,43,0.056929976851851846,10,33,2,0
+colondb,external_test,380,380,380,0,0,True,500x574,500x574,500x574,1,0,0,0,0,14,18,0.036177700348432054,200,19,0,0
+etis,external_test,196,196,196,0,0,True,966x1225,966x1225,966x1225,1,0,0,0,6,3,0,0.019754510499852114,88,0,0,0
+cvc300,reference,60,60,60,0,0,True,500x574,500x574,500x574,1,0,0,0,0,1,0,0.027733449477351915,39,0,0,0
