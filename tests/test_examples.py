@@ -10,7 +10,9 @@ from samrel.examples import select_examples
 
 def table(dice, conf):
     ids = [f"etis/{i}" for i in range(len(dice))]
-    return pd.DataFrame({"dataset": "etis", "image_id": ids, "dice": dice, "conf_iou_pred": conf, "excluded": False})
+    iou = [d / (2 - d) for d in dice]
+    return pd.DataFrame({"dataset": "etis", "image_id": ids, "dice": dice, "iou": iou, "conf_iou_pred": conf,
+                         "excluded": False})
 
 
 def test_rules_and_no_duplicates():
@@ -18,10 +20,18 @@ def test_rules_and_no_duplicates():
     a2 = table([0.95, 0.4, 0.9, 0.9, 0.85], [0.9, 0.95, 0.9, 0.9, 0.9])
     s = select_examples(a0, a2, datasets=("etis",)).set_index("rule")["image_id"]
     assert s["typical"] == "etis/2"          # median 0.7
-    assert s["overconfident"] == "etis/1"    # 0.95 - 0.4
+    assert s["overconfident"] == "etis/1"    # 0.95 - 0.25
     assert s["a0_worst"] == "etis/4"
     assert s["a2_worst"] == "etis/3"          # 1, 4, 2 already taken; 3 is next (tie with 2 by id)
     assert len(set(s)) == 4
+
+
+def test_overconfidence_is_predicted_minus_actual_iou():
+    # Dice would pick etis/1 (0.898 - 0.833 = 0.065 against 0.827 - 0.767 = 0.060), IoU picks etis/0.
+    a0 = table([0.5, 0.6, 0.7], [0.9] * 3)
+    a2 = table([0.767, 0.833, 0.9], [0.827, 0.898, 0.9])
+    s = select_examples(a0, a2, datasets=("etis",), rules=("overconfident",)).set_index("rule")["image_id"]
+    assert s["overconfident"] == "etis/0"
 
 
 def test_tie_goes_to_smaller_id_and_excluded_skipped():

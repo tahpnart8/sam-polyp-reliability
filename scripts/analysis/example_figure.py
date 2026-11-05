@@ -1,6 +1,6 @@
 """Success/failure example figure (PROTOCOL §13): rule-based selection, then drawing.
 
-Step 1 writes the selected images (no test-based choice beyond the pre-approved rules):
+Step 1 writes the selected images (by rule, not by eye; the overconfident rule was corrected after results):
     python scripts/analysis/example_figure.py select --runs results/metrics/runs.csv \
         --out results/figures/examples_selected.csv
 Step 2 needs the .npz of those images only, downloaded per run into <pred-root>/<run_id>/<dataset>/<stem>.npz:
@@ -8,7 +8,7 @@ Step 2 needs the .npz of those images only, downloaded per run into <pred-root>/
         --selected results/figures/examples_selected.csv --pred-root <dir> --data-root data/raw \
         --out-dir results/figures
 A3 maps are the pixel-wise mean of the three A2 members (samrel.ensemble.combine_probs), as in the
-A3 job; the Dice and predicted IoU printed in each cell come from the per-image tables.
+A3 job; the actual and predicted IoU printed in each cell come from the per-image tables.
 """
 
 from __future__ import annotations
@@ -22,6 +22,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from PIL import Image  # noqa: E402
 
 from samrel.config import load_config  # noqa: E402
 from samrel.data import discover, read_image, read_mask  # noqa: E402
@@ -87,8 +88,9 @@ def cmd_draw(args) -> int:
     tables = {c: per_image(r[c][0]).set_index("image_id") for c in COLUMNS}
 
     def draw(rows, name):
-        fig, axes = plt.subplots(len(rows), 1 + len(COLUMNS), figsize=(WIDTH, WIDTH / 5 * len(rows) * 0.95),
-                                 squeeze=False)
+        # one row gets a fixed page budget (under 620 px at 600 dpi) with explicit margins, see below
+        height = 26.2 * MM if len(rows) == 1 else WIDTH / 5 * len(rows) * 0.95
+        fig, axes = plt.subplots(len(rows), 1 + len(COLUMNS), figsize=(WIDTH, height), squeeze=False)
         for i, (ds, rule) in enumerate(rows):
             image_id = sel.loc[(sel.dataset == ds) & (sel.rule == rule), "image_id"].item()
             rec = records[image_id]
@@ -99,7 +101,7 @@ def cmd_draw(args) -> int:
             _, boxes = prob_map(args.pred_root, r["a0"][0], image_id)
             for x0, y0, x1, y1 in np.asarray(boxes).reshape(-1, 4):
                 ax.add_patch(plt.Rectangle((x0, y0), x1 - x0, y1 - y0, fill=False, ec=BOX_COLOR, lw=0.4))
-            ax.set_ylabel(f"{ds}\n{rule}", fontsize=5)
+            ax.set_ylabel(f"{ds}\n{rule}", fontsize=6)
             for j, c in enumerate(COLUMNS, start=1):
                 if c == "a3":
                     prob = combine_probs([prob_map(args.pred_root, m, image_id)[0] for m in r["a2_members"]])
@@ -110,20 +112,25 @@ def cmd_draw(args) -> int:
                 ax.imshow(img)
                 outline(ax, gt, GT_COLOR)
                 outline(ax, prob >= 0.5, PRED_COLOR)
-                ax.set_xlabel(f"Dice {row['dice']:.2f}  IoU$_p$ {row['conf_iou_pred']:.2f}", fontsize=5, labelpad=1)
+                ax.set_xlabel(f"IoU {row['iou']:.2f}  IoU$_p$ {row['conf_iou_pred']:.2f}", fontsize=6, labelpad=1)
         for j, title in enumerate(["Image, GT, box"] + [HEAD[c] for c in COLUMNS]):
-            axes[0, j].set_title(title, fontsize=6)
+            axes[0, j].set_title(title, fontsize=6, pad=2 if len(rows) == 1 else 6)
         for ax in axes.flat:
             ax.set_xticks([])
             ax.set_yticks([])
         fig.tight_layout(pad=0.3, h_pad=0.4, w_pad=0.2)
+        if len(rows) == 1:  # tight_layout leaves slack around equal-aspect images and clips the titles
+            fig.subplots_adjust(top=1 - 3.1 * MM / height, bottom=2.6 * MM / height)
         for ext in ("png", "pdf"):
             fig.savefig(args.out_dir / f"{name}.{ext}")
         plt.close(fig)
+        png = args.out_dir / f"{name}.png"
+        Image.open(png).convert("RGB").save(png, dpi=(600, 600))  # white background, no alpha channel for Word
         print(args.out_dir / f"{name}.png")
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
     draw(MAIN, "examples_main")
+    draw([("colondb", "overconfident")], "fig3_one_row")
     draw([(ds, rule) for ds in ("colondb", "etis") for rule in ("typical", "overconfident", "a0_worst", "a2_worst")],
          "examples_supplementary")
     return 0

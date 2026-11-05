@@ -28,10 +28,10 @@ Models are trained on Kvasir-SEG and CVC-ClinicDB (PraNet split) and tested on t
 On the external test sets and under oracle boxes:
 
 - LoRA fine-tuning raised Dice (CVC-ColonDB 0.811 to 0.932; ETIS-LaribPolypDB 0.907 to 0.942) and reduced calibration error around the polyp.
-- The fine-tuned confidence scores ranked images by segmentation quality no better than zero-shot SAM (Spearman correlation), even though AURC decreased; AURC also reflects the lower overall error, so a lower AURC alone is not better failure detection.
+- The fine-tuned confidence scores did not consistently rank images by segmentation quality better than zero-shot SAM (Spearman correlation), even though AURC decreased; AURC also reflects the lower overall error, so a lower AURC alone is not better failure detection.
 - After fine-tuning almost no image fell below Dice 0.5, so AUROC could not support conclusions for most configurations. The main RQ2 metrics were changed to AURC and Spearman correlation **after** seeing these failure counts; this change is reported openly (see `docs/PROTOCOL.md` §7.7).
 - The ensemble added little (for example Dice +0.001 to +0.002 on CVC-ColonDB) at about three times the inference time of a single LoRA model on one Tesla T4.
-- A prompt-perturbation check (§14) shifted and rescaled the oracle boxes at three predefined levels. Dice dropped by a similar amount for every configuration (IoU dropped somewhat more for the fine-tuned models); the lower quality ranking of the fine-tuned models relative to zero-shot SAM did not reverse at any level, while some AURC comparisons did.
+- A prompt-perturbation check (§14) shifted and rescaled the oracle boxes at three predefined levels. Dice dropped by a similar amount for every configuration (IoU dropped somewhat more for the fine-tuned models); A1 and A2 were never consistently above zero-shot SAM in Spearman correlation at any level, with either score, while some AURC comparisons reversed. With the IoU-head score no point estimate of A1 or A2 was above zero-shot SAM. Paired intervals above zero-shot SAM occurred only with mean pixel confidence on CVC-ColonDB: A2 seed 1 at the oracle level, and A3 at the strongest level (A3 versus zero-shot SAM is an exploratory analysis added after the results were seen). Most other comparisons are undetermined, which does not mean equivalent: their interval half-widths are 0.07 to 0.13 (`results/metrics/perturb/rq2_spearman_counts.csv`).
 
 These findings come from one backbone, one LoRA rank, three seeds and two external datasets, with confidence intervals not corrected for multiple comparisons.
 
@@ -97,6 +97,9 @@ python scripts/analysis/aggregate_perturb.py --perturb-dir results/metrics/pertu
 python scripts/analysis/fig_perturb.py --perturb-dir results/metrics/perturb --out-dir results/figures
 python scripts/checks/ece_per_image.py --metrics-dir results/metrics
 python scripts/checks/integrity_perturb.py --report results/logs/integrity_perturb.md
+python scripts/checks/rq2_spearman_audit.py --perturb-dir results/metrics/perturb --out-dir results/metrics/perturb
+python scripts/checks/paired_independent.py --metrics-dir results/metrics --out-csv results/data_checks/paired_independent.csv --report results/logs/paired_independent_report.md
+python scripts/checks/overconfidence_check.py --metrics-dir results/metrics --out-csv results/data_checks/overconfidence_a2_s0.csv
 ```
 
 `scripts/checks/reproduce_outputs.py --commit HEAD --work <tmp dir> --report <file>` exports the analysis code of one commit, reruns it on the stored inputs and compares the outputs byte by byte (tables) and pixel by pixel (figures).
@@ -131,9 +134,11 @@ The Kaggle jobs used for the paper were generated from `kaggle/templates/` (see 
 | Table 5, paired comparisons | `results/metrics/paired.csv`, `paired_consistency.csv` | `aggregate.py`, `finalize_tables.py` |
 | Table 6, failures and quality ranking | `results/metrics/summary.csv` (AURC, Spearman, AUROC with `n_failures`), `summary_secondary.csv` | `aggregate.py` |
 | Fig. 2, reliability and risk-coverage | `results/figures/fig2_compact.*` | `scripts/analysis/fig2_compact.py` |
-| Example segmentations | `results/figures/examples_main.*`, `examples_selected.csv` | `scripts/analysis/example_figure.py` |
+| Fig. 3 and example segmentations | `results/figures/fig3_one_row.*`, `examples_main.*`, `examples_selected.csv`; values in `results/data_checks/overconfidence_a2_s0.csv` | `scripts/analysis/example_figure.py` (drawing needs the downloaded predictions), `scripts/checks/overconfidence_check.py` |
 | Computational cost | `results/metrics/cost.csv` | `run_post.py --task benchmark`, `finalize_tables.py` |
 | Prompt perturbation | `results/metrics/perturb/*.csv`, `results/figures/fig_perturb.*` | `run_perturb.py`, `aggregate_perturb.py`, `fig_perturb.py` |
+| Spearman by dataset, level, score and seed, each against A0; A3 versus A0 (exploratory) | `results/metrics/perturb/rq2_spearman_{by_seed,cells,counts}.csv`, `a3_vs_a0.csv` | `scripts/checks/rq2_spearman_audit.py` |
+| Independent recomputation of the paired comparisons | `results/logs/paired_independent_report.md`, `results/data_checks/paired_independent.csv` | `scripts/checks/paired_independent.py` |
 | Per-image ECE check | `results/metrics/ece_per_image_*.csv` | `scripts/checks/ece_per_image.py` |
 | Data independence checks | `results/data_checks/{overlap_pairs,clinicdb_sequences,clinicdb_test_sequence}.csv` | `audit_dataset.py`, `scripts/checks/clinicdb_sequences.py` |
 

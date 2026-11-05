@@ -34,7 +34,7 @@ def select_examples(a0: pd.DataFrame, a2_seed0: pd.DataFrame,
                 s = (g0["dice"] - g0["dice"].median()).abs().rename("score")
                 pick = _pick(s, taken, ascending=True)
             elif rule == "overconfident":
-                s = (g2["conf_iou_pred"] - g2["dice"]).rename("score")
+                s = (g2["conf_iou_pred"] - g2["iou"]).rename("score")
                 pick = _pick(s, taken, ascending=False)
             elif rule == "a0_worst":
                 pick = _pick(g0["dice"].rename("score"), taken, ascending=True)

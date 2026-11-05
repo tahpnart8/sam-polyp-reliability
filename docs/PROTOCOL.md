@@ -153,7 +153,9 @@ Tests never write to `results/`: a fixture redirects the results directory, and 
 | Q-B11 | pairing with three seeds | seed by seed (A1-A0, A2-A0, A2-A1 same seed, A3 versus each A2 seed) |
 
 ## §13. Example figure
-Images are chosen by rule, not by eye, on ColonDB and ETIS: `typical` (A0 Dice closest to the A0 median) and `overconfident` (largest `conf_iou_pred - Dice` for A2 seed 0); A1 and A2 are shown with seed 0, fixed in advance.
+Images are chosen by rule, not by eye, on ColonDB and ETIS: `typical` (A0 Dice closest to the A0 median) and `overconfident` (largest `conf_iou_pred - iou` for A2 seed 0, predicted minus actual IoU); A1 and A2 are shown with seed 0, fixed in advance.
+
+Correction made after the results were seen: the rule first compared the predicted IoU with Dice, two quantities on different scales. Comparing it with the actual IoU keeps `colondb/204` and replaces `etis/192` by `etis/72`. `typical` is unchanged.
 
 ## §14. Prompt perturbation
 Fixed before generating any perturbed prompt and before any inference with them. It tests whether the RQ2 findings depend on oracle boxes; it is not a new research question.
