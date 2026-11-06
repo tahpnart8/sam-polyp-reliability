@@ -45,6 +45,7 @@ Everything is computed from the per-image files of the 32 perturbation runs, `re
 | A3 versus A0 on every RQ1 and RQ2 metric (exploratory, added after the results were seen) | `a3_vs_a0.csv` | `rq2_spearman_audit.py` |
 | Delta from P0, difference from A0, the four comparison families | `delta*.csv`, `did*.csv`, `rq2_pairs.csv`, `rq2_consistency.csv` | `python scripts/analysis/aggregate_perturb.py --perturb-dir results/metrics/perturb` |
 | AUROC is read only with at least 20 failures and 20 successes | every cell with its counts: `auroc_cells.csv`; every comparison and its reading: `auroc_comparisons.csv` | `python scripts/checks/auroc_cells.py --perturb-dir results/metrics/perturb` |
+| A3: pairwise-Dice score against its IoU-head score (exploratory, added after the results were seen) | `results/metrics/a3_pairwise_vs_iou_head.csv` | `python scripts/checks/a3_score_comparison.py --metrics-dir results/metrics --out-csv results/metrics/a3_pairwise_vs_iou_head.csv` |
 | Each statement of the manuscript on RQ2 against the files | `results/logs/rq2_claims_check.md`, `results/data_checks/rq2_claims_check.csv` | `python scripts/checks/verify_rq2_claims.py --metrics-dir results/metrics --out-csv results/data_checks/rq2_claims_check.csv --report results/logs/rq2_claims_check.md` |
 
 Undetermined means the paired interval contains zero. It does not mean the two configurations are equivalent.
@@ -105,6 +106,7 @@ Reading k of 3 in Table 5:
 |---|---|
 | Source code and tests | `src/samrel/`, `scripts/`, `tests/` |
 | Configuration, environment lock | `configs/base.yaml`, `a0.yaml`, `a1.yaml`, `a2.yaml`, `env_kaggle.lock.json` |
+| GPU | Each run used one Tesla T4: the code moves the model to the default device and has no multi-GPU wrapper. The machines had two T4 cards, which is the `gpu_count` of 2 in `results/metrics/cost.csv` and the environment records |
 | Seeds | root seed in `configs/base.yaml`, training seeds in `results/metrics/runs.csv`, derivation in `src/samrel/seeding.py` and `docs/PROTOCOL.md` §2 |
 | Box prompts and validation split | `data/prompts/`, `data/splits/` |
 | Run manifests, environment, training logs | `results/logs/manifests/`, `results/logs/environment/`, `results/logs/train/` |
