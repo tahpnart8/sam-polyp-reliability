@@ -61,6 +61,7 @@ results/
   figures/          figures of the paper (PNG 600 dpi and PDF)
   logs/             run manifests, environment records, training logs, integrity and reproduction reports
   metrics/          per-image results of every run, ECE bin statistics, summary and comparison tables
+  predictions_selected/  saved probability maps of the eight example images (all others: see docs/EVIDENCE.md)
   metrics/perturb/  prompt-perturbation runs and tables
 scripts/
   data/             dataset audit, prompt and split generation

@@ -26,13 +26,13 @@ RQ2 and RQ3 were reworded after the results were known, so that they ask what th
 
 | In the manuscript | Files | Rebuild |
 |---|---|---|
-| Table 2, datasets | `results/data_checks/dataset_characteristics.csv`, `image_lists.csv` | `python scripts/data/audit_dataset.py --data-root <images> --out-dir results/data_checks`, `python scripts/data/export_image_lists.py --audit results/data_checks/audit_per_image.csv --val-split data/splits/val_split.json --out-csv results/data_checks/image_lists.csv --data-root <images>` |
+| Table 2, datasets | `results/data_checks/dataset_characteristics.csv`, `image_lists.csv` | `python scripts/data/audit_dataset.py --data-root <images> --out-dir results/data_checks --splits-dir data/splits`, `python scripts/data/export_image_lists.py --audit results/data_checks/audit_per_image.csv --val-split data/splits/val_split.json --out-csv results/data_checks/image_lists.csv --data-root <images>` |
 | Table 3, configurations | `results/metrics/trainable_params.csv` | `python scripts/analysis/count_params.py --out-dir results/metrics` |
 | Table 4, accuracy and calibration | `results/metrics/summary.csv`, `seed_stability.csv` | `python scripts/analysis/aggregate.py --metrics-dir results/metrics --runs results/metrics/runs.csv` |
 | Table 5, paired comparisons | `results/metrics/paired.csv`, `paired_consistency.csv` | `aggregate.py`, then `python scripts/analysis/finalize_tables.py --metrics-dir results/metrics` |
 | Table 6, failures and ranking | `results/metrics/summary.csv`, `summary_secondary.csv` | `aggregate.py` |
 | Fig. 2 | `results/figures/fig2_compact.*` | `python scripts/analysis/fig2_compact.py --metrics-dir results/metrics --runs results/figures/runs_shown.csv --out-dir results/figures` |
-| Fig. 3 and other examples | `results/figures/fig3_one_row.*`, `examples_main.*`, `examples_selected.csv` | `python scripts/analysis/example_figure.py select ...`, then `draw ...`; drawing needs the predictions and the images, see below |
+| Fig. 3 and other examples | `results/figures/fig3_one_row.*`, `examples_main.*`, `examples_selected.csv` | `python scripts/analysis/example_figure.py select --runs results/metrics/runs.csv --out results/figures/examples_selected.csv`, then `python scripts/analysis/example_figure.py draw --runs results/metrics/runs.csv --selected results/figures/examples_selected.csv --pred-root results/predictions_selected --data-root <images> --out-dir results/figures` |
 | Prompt perturbation figure | `results/figures/fig_perturb.*` | `python scripts/analysis/fig_perturb.py --perturb-dir results/metrics/perturb --out-dir results/figures` |
 
 ## Prompt perturbation (RQ2)
@@ -59,7 +59,11 @@ python scripts/checks/overconfidence_check.py --metrics-dir results/metrics --se
 
 The command prints rank 1 and rank 2 and exits with an error if the figure image is not rank 1. The rule was set after the results were known. It replaced an earlier rule that compared the predicted IoU with Dice (`docs/PROTOCOL.md` §13).
 
-`results/data_checks/raw_prediction_check.csv` ties the tables to the raw predictions: Dice, IoU and predicted IoU of the 8 selected images were recomputed from the probability maps and masks for A0, A1 seed 0, A2 seeds 0-2 and A3 (rebuilt as the mean of its members); the largest gap is below 1e-7 (`scripts/checks/raw_prediction_check.py`).
+`results/data_checks/raw_prediction_check.csv` ties the tables to the raw predictions: Dice, IoU and predicted IoU of the 8 selected images were recomputed from the probability maps and masks for A0, A1 seed 0, A2 seeds 0-2 and A3 (rebuilt as the mean of its members); the largest gap is below 1e-7. The probability maps of these 8 images are in `results/predictions_selected/`:
+
+```bash
+python scripts/checks/raw_prediction_check.py --runs results/metrics/runs.csv --metrics-dir results/metrics --selected results/figures/examples_selected.csv --pred-root results/predictions_selected --data-root <images> --out-csv results/data_checks/raw_prediction_check.csv
+```
 
 ## Data independence
 
@@ -73,7 +77,7 @@ The command prints rank 1 and rank 2 and exits with an error if the figure image
 
 The sequence table is "Table 1" of the CVC-ClinicDB page on Grand Challenge (https://polyp.grand-challenge.org/CVCClinicDB/). The check assumes that a PraNet file name is the original frame number; the 550 train and 62 test names together are exactly 1 to 612, and no document confirms the assumption. CVC-ColonDB, ETIS-LaribPolypDB and Kvasir-SEG publish no image-to-sequence or image-to-patient map, so independence of the external sets rests mainly on their different hospitals and cannot be fully excluded at video or patient level.
 
-Record of the visual inspection, naming who inspected the pairs and when: to be added before submission.
+[inspection record: pending]
 
 ## Statistics
 
@@ -106,5 +110,5 @@ Reading k of 3 in Table 5:
 ## What is not in this repository
 
 - **Images and masks.** Obtain them from the original sources (see `README.md`, "Data"); `image_lists.csv` lists the sha256 of every file used.
-- **Pixel-level predictions (`.npz`).** They are the outputs of private Kaggle kernels, so only the owner of the Kaggle account that ran them can download them. The per-image values derived from them are in this repository. Recomputing the per-image tables from images needs a GPU run with the stored prompts and the trained weights.
+- **Pixel-level predictions (`.npz`) of the other images.** This repository holds the 8 example images for the 5 runs needed (`results/predictions_selected/`, 40 files, 12.3 MB). All predictions are outputs of private Kaggle kernels, so only the owner of the Kaggle account that ran them can download them. Their total size is about 1.6 GB; this is an estimate from the mean size of 60 downloaded files (281 KB) times 798 images and 7 models, not a measurement. The per-image values derived from all predictions are in this repository. Recomputing the per-image tables from images needs a GPU run with the stored prompts and the trained weights.
 - **Trained weights (`.pt`).** They are kept in a private Kaggle dataset. Without them, A1, A2 and A3 can be retrained from `scripts/run/run_task.py`, within the limits on determinism in `docs/PROTOCOL.md` §9.3.

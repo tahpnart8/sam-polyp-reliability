@@ -15,6 +15,8 @@ results/checkpoints/
 # per-image ECE bin statistics are small and needed to rebuild the ECE tables
 !results/metrics/ece_bins/*.npz
 !results/metrics/perturb/ece_bins/*.npz
+# saved probability maps of the eight example images (Fig. 3 and the other examples)
+!results/predictions_selected/**/*.npz
 
 # Kaggle jobs and credentials
 kaggle.json
