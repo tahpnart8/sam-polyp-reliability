@@ -33,7 +33,7 @@ Masks are read as grey levels and binarised with `value > 127` (Q-B1). Non-binar
 8-connectivity. Only components of at least 50 pixels produce a box prompt (Q-B2); the ground-truth mask used for the metrics is never changed, including 1-10 pixel annotation speckle.
 
 ### §1.5 Exclusion rule (near duplicates)
-A ColonDB or ETIS image is excluded from the main analysis when some training image is within 6 bits Hamming distance on **both** a 64-bit pHash of the whole image and a pHash of the central 60% crop (Q-B10). With this rule no image was excluded. The whole-image hash alone flagged 19 ColonDB images; visual inspection of these pairs judged all of them different scenes (matches caused by the shared black octagonal frame and low-detail frames). No other image is excluded.
+A ColonDB or ETIS image is excluded from the main analysis when some training image is within 6 bits Hamming distance on **both** a 64-bit pHash of the whole image and a pHash of the central 60% crop (Q-B10). With this rule no image was excluded. The whole-image hash alone flagged 19 ColonDB images (36 pairs, `results/data_checks/phash_flagged_pairs.csv`); the visual inspection record is in `docs/EVIDENCE.md`. No other image is excluded.
 
 ### §1.6 Data audit
 `scripts/data/audit_dataset.py` writes `results/data_checks/audit_per_image.csv`, `dataset_characteristics.csv` (counts, sizes, mask quality, multi-polyp images, near duplicates) and `overlap_pairs.csv` (all pairs with whole-image pHash distance at most 10).

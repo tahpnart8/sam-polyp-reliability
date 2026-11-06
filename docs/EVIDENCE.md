@@ -77,7 +77,11 @@ python scripts/checks/raw_prediction_check.py --runs results/metrics/runs.csv --
 
 The sequence table is "Table 1" of the CVC-ClinicDB page on Grand Challenge (https://polyp.grand-challenge.org/CVCClinicDB/). The check assumes that a PraNet file name is the original frame number; the 550 train and 62 test names together are exactly 1 to 612, and no document confirms the assumption. CVC-ColonDB, ETIS-LaribPolypDB and Kvasir-SEG publish no image-to-sequence or image-to-patient map, so independence of the external sets rests mainly on their different hospitals and cannot be fully excluded at video or patient level.
 
-[inspection record: pending]
+Visual inspection record. A pair counts as the same scene when it shows the same polyp, the same mucosal region and the same viewpoint. Pairs: `results/data_checks/phash_flagged_pairs.csv`; the command above rebuilds the montage.
+
+| Inspector | Date | Result |
+|---|---|---|
+| pending | pending | pending |
 
 ## Statistics
 
