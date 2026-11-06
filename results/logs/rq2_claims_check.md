@@ -1,0 +1,30 @@
+# Statements on RQ2 and prompt perturbation against the output files
+
+| # | Statement | File | What the file shows | Verdict |
+|---|---|---|---|---|
+| 1 | Failures (Dice < 0.5): zero-shot SAM 40 ColonDB images, 1 ETIS image | metrics/summary.csv, n_failures | [40], [1] | match |
+| 2 | A1 failed on one ColonDB image per seed | metrics/summary.csv, n_failures | [1, 1, 1] | match |
+| 3 | A2 and A3 failed on no image | metrics/summary.csv, n_failures | {('colondb', 'a2'): [0, 0, 0], ('colondb', 'a3'): [0], ('etis', 'a2'): [0, 0, 0], ('etis', 'a3'): [0]} | match |
+| 4 | Threshold 0.7: A0 43 and 6 failures, no fine-tuned model more than 2 | metrics/summary_secondary.csv, n_failures_07 | A0 [43], [6]; fine-tuned max 2 | match |
+| 5 | Oracle boxes: AUROC usable only for zero-shot SAM on ColonDB; IoU head 0.951 [0.922, 0.976] | metrics/perturb/auroc_cells.csv; metrics/summary.csv | eligible P0 cells: [('a0', 'colondb')]; 0.951 [0.922, 0.976] | match |
+| 6 | Fine-tuning lowered AURC consistently for A1 and A2 on both sets | metrics/paired_consistency.csv, aurc_iou_pred | a1_vs_a0 colondb max -0.025; a1_vs_a0 etis max -0.008; a2_vs_a0 colondb max -0.038; a2_vs_a0 etis max -0.011 | match |
+| 7 | IoU head: rho 0.724 and 0.743 for zero-shot SAM | metrics/summary.csv | 0.724, 0.743 | match |
+| 8 | rho fell consistently for A1, by 0.08 to 0.13 on both sets | metrics/paired_consistency.csv, spearman_iou_pred | ColonDB -0.1295 to -0.0787; ETIS -0.1298 to -0.0847 | match |
+| 9 | rho of A2 did not differ consistently from A0 (IoU head) | metrics/paired_consistency.csv | k 0/3, 0/3 | match |
+| 10 | Mean pixel confidence: A2 ranked ETIS consistently worse, rho 0.231 +- 0.098 versus 0.489 | metrics/paired_consistency.csv; seed_stability.csv; summary.csv | consistent True, -0.331 to -0.146; 0.231 +- 0.098 versus 0.489 | match |
+| 11 | Median IoU with oracle boxes 0.81, 0.67, 0.54 at P1-P3 (ColonDB) | metrics/perturb/prompt_levels.csv | 0.81, 0.67, 0.54 | match |
+| 12 | Dice fell with the level in every configuration, consistently except A0 on ColonDB at P1 | metrics/perturb/delta_consistency.csv, dice | 23/24 consistent; exceptions [('a0', 'colondb', 'pp10')] | match |
+| 13 | Dice 0.623 (A0) and 0.747 (A3) on ColonDB at P3 | metrics/perturb/summary.csv | 0.623, 0.747 | match |
+| 14 | Dice loss of fine-tuned models against A0: more sensitive only on ETIS at P2, otherwise not distinguishable | metrics/perturb/did_consistency.csv, dice | more sensitive [('etis', 'pp20')]; less sensitive []; others not_distinguishable | match |
+| 15 | Point estimates only: most fine-tuned runs lost at least as much Dice as A0, so "not distinguishable" must not be read as "lost no more" | metrics/perturb/delta.csv, dice | 34 of 42 fine-tuned runs lost more Dice than A0 in point estimate | match |
+| 16 | Fine-tuned models lost more IoU from P2 on (P1 on ETIS) | metrics/perturb/did_consistency.csv, iou | [('colondb', 'pp20'), ('colondb', 'pp30'), ('etis', 'pp10'), ('etis', 'pp20'), ('etis', 'pp30')] | match |
+| 17 | A1 and A2 never had consistently higher rho than A0, with either score | metrics/perturb/rq2_spearman_cells.csv | 0 of 32 cells | match |
+| 18 | IoU head: both consistently lower on ColonDB at P2; on ETIS A1 at every level, A2 from P1 (A1 on ColonDB at P0 is stated separately) | metrics/perturb/rq2_spearman_cells.csv | [('a1', 'colondb', 'pp00'), ('a1', 'colondb', 'pp20'), ('a1', 'etis', 'pp00'), ('a1', 'etis', 'pp10'), ('a1', 'etis', 'pp20'), ('a1', 'etis', 'pp30'), ('a2', 'colondb', 'pp20'), ('a2', 'etis', 'pp10'), ('a2', 'etis', 'pp20'), ('a2', 'etis', 'pp30')] | match |
+| 19 | Paired intervals above A0 occurred only for A2 seed 1 at P0 (+0.113) and A3 at P3 (+0.111), mean confidence on ColonDB | metrics/perturb/rq2_spearman_by_seed.csv | [('a2', '1', 'colondb', 'mean_inside', 'pp00', '+0.113'), ('a3', '012', 'colondb', 'mean_inside', 'pp30', '+0.111')] | match |
+| 20 | ETIS P2-P3: A1 and A2 consistently higher AURC than A0 despite no lower mean Dice | metrics/perturb/rq2_consistency.csv; summary.csv | {'consistent_+'}; pp20: A0 0.850, A1/A2 min 0.851; pp30: A0 0.722, A1/A2 min 0.745 | match |
+| 21 | AUROC at threshold 0.7, ETIS, P3: A0 0.914 [0.854, 0.960]; A1 and A2 consistently lower (0.785 to 0.822) | metrics/perturb/auroc_cells.csv; auroc_comparisons.csv | 0.914 [0.854, 0.960]; 0.785 to 0.822; {'a1_vs_a0': 'consistent_-', 'a2_vs_a0': 'consistent_-', 'a2_vs_a1': 'not_consistent', 'a3_vs_a2': 'not_consistent'}; eligible True | match |
+| 22 | Other eligible AUROC comparisons between configurations were inconsistent | metrics/perturb/auroc_comparisons.csv | 18 comparisons, classes ['not_consistent'] | match |
+| 23 | Changes in AUROC from P0 are computable only for A0 on ColonDB (few P0 failures elsewhere); no difference from A0 is computable | metrics/perturb/auroc_comparisons.csv | 0 differences from A0 usable; changes from P0 usable for ['a0'] on ['colondb'] (12 rows, classes ['consistent_-', 'not_consistent']) | match |
+| 24 | Under perturbed boxes fine-tuned models did not consistently rank better than zero-shot SAM (A1, A2 all cells; A3 is one run) | metrics/perturb/rq2_spearman_cells.csv | A1, A2: 0 cells higher. A3: [('colondb', 'mean_inside', 'pp30')] of 16 cells, one run, exploratory | match |
+
+24 match, 0 differ, of 24.
