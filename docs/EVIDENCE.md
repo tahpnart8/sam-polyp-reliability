@@ -81,7 +81,7 @@ Visual inspection record. A pair counts as the same scene when it shows the same
 
 | Inspector | Date | Result |
 |---|---|---|
-| pending | pending | pending |
+| Duc Phat Tran (Trần Đức Phát) | 2026-11-06 | 36 of 36 pairs show different scenes, on the full montage of 36 pairs; not an endoscopist's review |
 
 ## Statistics
 
