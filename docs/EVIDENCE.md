@@ -2,7 +2,7 @@
 
 Each table, figure and main statement of the manuscript, with the files behind it and the command that rebuilds it. All commands run from the repository root with `PYTHONPATH=src`, after `pip install -r requirements-local.txt`. No GPU is needed unless stated: everything starts from the stored per-image outputs.
 
-Table and section numbers follow the manuscript version v14. Paths are relative to the repository root.
+Table and section numbers follow the submitted manuscript. Paths are relative to the repository root.
 
 ## Rebuild everything at one commit
 
